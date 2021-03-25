@@ -1,5 +1,6 @@
 import React, {useReducer} from 'react';
 import reducer, {initialState} from './reducers/index';
+import {addOne, applyNumber, changeOperation} from './actions/index';
 
 import './App.css';
 
@@ -8,6 +9,14 @@ import CalcButton from './components/CalcButton';
 
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
+
+  const numberHandler = (number) => {
+    dispatch(applyNumber(number));
+  }
+
+  const operationHandler = (operation) => {
+    dispatch(changeOperation(operation));
+  }
   
   return (
     <div className="App">
@@ -32,27 +41,27 @@ function App() {
             </div>
 
             <div className="row">
-              <CalcButton value={1}/>
-              <CalcButton value={2}/>
-              <CalcButton value={3}/>
+              <CalcButton value={1} onClick={(event) => {numberHandler(parseInt(event.target.innerText))}}/>
+              <CalcButton value={2} onClick={(event) => {numberHandler(parseInt(event.target.innerText))}}/>
+              <CalcButton value={3} onClick={(event) => {numberHandler(parseInt(event.target.innerText))}}/>
             </div>
 
             <div className="row">
-              <CalcButton value={4}/>
-              <CalcButton value={5}/>
-              <CalcButton value={6}/>
+              <CalcButton value={4} onClick={(event) => {numberHandler(parseInt(event.target.innerText))}}/>
+              <CalcButton value={5} onClick={(event) => {numberHandler(parseInt(event.target.innerText))}}/>
+              <CalcButton value={6} onClick={(event) => {numberHandler(parseInt(event.target.innerText))}}/>
             </div>
 
             <div className="row">
-              <CalcButton value={7}/>
-              <CalcButton value={8}/>
-              <CalcButton value={9}/>
+              <CalcButton value={7} onClick={(event) => {numberHandler(parseInt(event.target.innerText))}}/>
+              <CalcButton value={8} onClick={(event) => {numberHandler(parseInt(event.target.innerText))}}/>
+              <CalcButton value={9} onClick={(event) => {numberHandler(parseInt(event.target.innerText))}}/>
             </div>
 
             <div className="row">
-              <CalcButton value={"+"}/>
-              <CalcButton value={"*"}/>
-              <CalcButton value={"-"}/>
+              <CalcButton value={"+"} onClick={(event) => {operationHandler(event.target.innerText)}}/>
+              <CalcButton value={"*"} onClick={(event) => {operationHandler(event.target.innerText)}}/>
+              <CalcButton value={"-"} onClick={(event) => {operationHandler(event.target.innerText)}}/>
             </div>
 
             <div className="row ce_button">
