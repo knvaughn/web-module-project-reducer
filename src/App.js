@@ -1,4 +1,6 @@
-import React from 'react';
+import React, {useReducer} from 'react';
+import reducer, {initialState} from './reducers/index';
+import {addOne, applyNumber, changeOperation, clearDisplay, storeMemory, applyMemory, clearMemory} from './actions/index';
 
 import './App.css';
 
@@ -6,7 +8,16 @@ import TotalDisplay from './components/TotalDisplay';
 import CalcButton from './components/CalcButton';
 
 function App() {
+  const [state, dispatch] = useReducer(reducer, initialState);
 
+  const numberHandler = (number) => {
+    dispatch(applyNumber(number));
+  }
+
+  const operationHandler = (operation) => {
+    dispatch(changeOperation(operation));
+  }
+  
   return (
     <div className="App">
       <nav className="navbar navbar-dark bg-dark">
@@ -17,44 +28,44 @@ function App() {
         <div className="col-md-12 d-flex justify-content-center">
           <form name="Cal">
             
-            <TotalDisplay value={0}/>
+            <TotalDisplay value={state.total}/>
             <div className="row details">
-              <span id="operation"><b>Operation:</b> X</span>
-              <span id="memory"><b>Memory:</b> 0</span>
+              <span id="operation"><b>Operation:</b> {state.operation}</span>
+              <span id="memory"><b>Memory:</b> {state.memory}</span>
             </div>
             
             <div className="row">
-              <CalcButton value={"M+"}/>
-              <CalcButton value={"MR"}/>
-              <CalcButton value={"MC"}/>
+              <CalcButton value={"M+"} onClick={() => {dispatch(storeMemory())}}/>
+              <CalcButton value={"MR"} onClick={() => {dispatch(applyMemory())}}/>
+              <CalcButton value={"MC"} onClick={() => {dispatch(clearMemory())}}/>
             </div>
 
             <div className="row">
-              <CalcButton value={1}/>
-              <CalcButton value={2}/>
-              <CalcButton value={3}/>
+              <CalcButton value={1} onClick={(event) => {numberHandler(parseInt(event.target.innerText))}}/>
+              <CalcButton value={2} onClick={(event) => {numberHandler(parseInt(event.target.innerText))}}/>
+              <CalcButton value={3} onClick={(event) => {numberHandler(parseInt(event.target.innerText))}}/>
             </div>
 
             <div className="row">
-              <CalcButton value={4}/>
-              <CalcButton value={5}/>
-              <CalcButton value={6}/>
+              <CalcButton value={4} onClick={(event) => {numberHandler(parseInt(event.target.innerText))}}/>
+              <CalcButton value={5} onClick={(event) => {numberHandler(parseInt(event.target.innerText))}}/>
+              <CalcButton value={6} onClick={(event) => {numberHandler(parseInt(event.target.innerText))}}/>
             </div>
 
             <div className="row">
-              <CalcButton value={7}/>
-              <CalcButton value={8}/>
-              <CalcButton value={9}/>
+              <CalcButton value={7} onClick={(event) => {numberHandler(parseInt(event.target.innerText))}}/>
+              <CalcButton value={8} onClick={(event) => {numberHandler(parseInt(event.target.innerText))}}/>
+              <CalcButton value={9} onClick={(event) => {numberHandler(parseInt(event.target.innerText))}}/>
             </div>
 
             <div className="row">
-              <CalcButton value={"+"}/>
-              <CalcButton value={"*"}/>
-              <CalcButton value={"-"}/>
+              <CalcButton value={"+"} onClick={(event) => {operationHandler(event.target.innerText)}}/>
+              <CalcButton value={"*"} onClick={(event) => {operationHandler(event.target.innerText)}}/>
+              <CalcButton value={"-"} onClick={(event) => {operationHandler(event.target.innerText)}}/>
             </div>
 
             <div className="row ce_button">
-              <CalcButton value={"CE"}/>
+              <CalcButton value={"CE"} onClick={() => {dispatch(clearDisplay())}}/>
             </div>
 
           </form>
